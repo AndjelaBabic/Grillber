@@ -11,6 +11,7 @@
                  [metosin/ring-http-response "0.9.1"]
                  [ring/ring-defaults "0.3.2"]
                  [selmer "1.12.5"]
+                 [yesql "0.5.3"]
                  [ring-webjars "0.2.0"]
                  [org.webjars/bootstrap "4.2.1"]
                  [org.webjars/font-awesome "5.6.1"]

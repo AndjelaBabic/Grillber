@@ -1,0 +1,109 @@
+{% extends "template.html" %}
+{% block content %}
+
+{% block page-style %}
+{% endblock %}
+<div class="main">
+		<h1>Book a grill</h1>
+		<div class="w3_agile_main_grids">
+		
+			<div id='progress'><div id='progress-complete'></div></div>
+			
+			<form id="SignupForm" action="/insertorder" class="agile_form" method="post">
+				<fieldset>
+					<h3>Place an order</h3>
+					<div class="form-group agileits_w3layouts_form w3_agileits_margin">
+						<div class="wthree_input">
+							<i class="fa fa-calendar" aria-hidden="true"></i>
+							<input id="delivery" type="date" name="Delivery" class="form-control dateclass placeholderclass" onClick="$(this).removeClass('placeholderclass')" placeholder="Pick a date" />
+						</div>
+					</div>
+					<div class="form-group agileits_w3layouts_form">
+						<div class="wthree_input">
+							<div class="wthree_input">
+							<i class="fa fa-hourglass-o" aria-hidden="true"></i>
+							<select class="form-control">
+								<option value="Pick a time" selected="">Pick a time</option>
+								<option value="09:00">09:00</option>
+								<option value="17:00"> 17:00 </option>
+							</select>
+							</div>							
+							<!-- <input id="Time" type="time" name="Time" class="form-control" min="09:00" max="18:00" placeholder="Pick a time" />-->
+						</div>
+					</div>
+					<div class="form-group agileits_w3layouts_form w3_agileits_margin">
+						<div class="wthree_input">
+							<i class="fa fa-home" aria-hidden="true"></i>
+							<input id="Address" type="text" name="Address" class="form-control" placeholder="Insert street and number" />
+						</div>
+					</div>
+					<div class="form-group agileits_w3layouts_form">
+						<div class="wthree_input">
+							<i class="fa fa-globe" aria-hidden="true"></i>
+							<select class="form-control">
+								<option value="Municipality" selected="">Municipality</option>
+								<option value="Novi Beograd">Novi Beograd</option>
+								<option value="Zemun"> Zemun </option>
+								<option value="Vozdovac"> Vozdovac </option>
+								<option value="Zvezdara"> Zvezdara </option>
+								<option value="Dorcol"> Dorcol </option>
+							</select>
+						</div>
+					</div>
+					<div class="clear"> </div>
+				</fieldset>
+				
+				<fieldset>
+					<h3>Choose your BBQ!</h3>
+					<h4 class="w3layouts_type">What type of grill would you want? </h4>
+					<div class="form-group agileits_circles">
+						<div class="wthree_radio">
+							<!-- <span class="fa fa-user" aria-hidden="true"></span> -->
+							<label class="radio">
+								<input type="radio" name="radio" checked="">
+								<i></i>SIGNET 90 <br>
+								20€
+							</label>
+						</div>
+					</div>
+					<div class="form-group agileits_circles">
+						<div class="wthree_radio">
+							<!-- <span class="fa fa-home" aria-hidden="true"></span> -->
+							<label class="radio">
+								<input type="radio" name="radio">
+								<i></i>REGAL S590 <br>
+								25€
+							</label>
+						</div>
+					</div>
+					<div class="form-group agileits_circles">
+						<div class="wthree_radio">
+							<!-- <span class="fa fa-building-o" aria-hidden="true"></span> -->
+							<label class="radio">
+								<input type="radio" name="radio">
+								<i></i>IMPERIAL XLS <br>
+								30€
+							</label>
+						</div>
+					</div>
+					<div class="clear"> </div>
+				</fieldset>
+				
+				<fieldset>
+					<h3 class="w3_room">Additional notes</h3>
+					<div class="form-group w3ls_description">
+						<i class="fa fa-align-right" aria-hidden="true"></i>
+						<textarea name="Message" placeholder="Your message here..." required=""></textarea>
+					</div>
+				</fieldset>
+	
+				<p>
+					<button id="SaveAccount" class="btn btn-primary agileinfo_primary submit">Submit form</button>
+				</p>
+			</form>
+			
+		
+		</div>
+	</div>
+
+{% endblock %}

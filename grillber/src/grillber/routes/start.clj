@@ -2,7 +2,8 @@
   (:require [compojure.core :refer :all]
             [grillber.layout :as layout]
             [ring.util.response :as response]
-            [struct.core :as st]))
+            [struct.core :as st]
+            [grillber.models.query_definition :as db]))
 
 (defn login-page
   []
@@ -11,33 +12,30 @@
 (defn signup-page
   []
   (layout/render "signup.html"))
+  
+(defn index-page
+ []
+(layout/render "index.html"))
+  
+(defn update-page
+ []
+(layout/render "update.html"))
 
-(def message-schema
-  [[:username
-    st/required
-    st/string
-    ]
-   [:password
-    [st/required :message "This field is required"]
-    st/string
-    {:message  "Password must contain at least 6 characters"
-     :validate #(> (count %) 6)}
-    ]
-   [:email
-    st/required
-    st/email
-    ]])
+(defn insert-order
+  "Stores new order in db"
+  [request]
+  (
+    (str "" (get (db/insert-order! {
+                                             :userid 1
+                                             :grillid 1
+                                             :delivery_time '2019-02-01 16:26:13'
+                                             :pickup_time '2019-02-23 15:07:20'
+                                             :addressid 1
+                                             :status 'Processed'}) :id) )))
 
-(defn validate-message [params]
-  (first (st/validate params message-schema)))
-
-(defn signup-page-submit [params]
-  (let [errors (validate-message params)]
-    (if (empty? errors)
-      (response/redirect "/login")
-      (layout/render "signup.html" (assoc params :errors errors)))))
-
-  (defroutes start-routes
+ (defroutes start-routes
            (GET "/signup" [] (signup-page))
-           (POST "/signup" [& form] (signup-page-submit form))
+           (GET "/index" [] (index-page))
+           (POST "/insertorder" [] insert-order)
+           (GET "/update" [] (update-page))
            (GET "/login" [] (login-page)))

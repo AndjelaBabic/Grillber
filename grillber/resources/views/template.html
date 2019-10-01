@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Grillber</title>
+    
+    <link rel="icon" href="images/logo.png">
+    <!-- styles -->
+
+
+    {% style "/css/font-awesome.css" %}
+    {% style "/css/my.css" %}
+    {% style "/css/style.css" %}
+
+    {% block page-style %}
+    {% endblock %}
+</head>
+<body>
+ {% block menu %}
+ <div>
+	<ul>
+	<!-- <img src="images/logo.png" style="width: 40px; height: 40px"></img>-->
+		<li><a href="#"><b>GRILLBER</b></a></li>
+		<li><a class="active" href="index.html">Book a grill</a></li>
+		<li><a href="update.html">Order history</a></li>
+		<li style="float:right"><a href="#" ><i class="fa fa-user"></i> Logout</a></li>
+	</ul>
+	</div>
+ {% endblock %}
+
+ {% block content %}
+ {%endblock%}
+<!-- scripts -->
+{% script "/js/jquery.min.js" %} 
+{% script "/js/jquery.formtowizard.js" %} 
+
+
+ <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+		function hideURLbar(){ window.scrollTo(0,1); } </script>
+ <script>
+        $( function() {
+            var $signupForm = $( '#SignupForm' );
+
+            $signupForm.validate({errorElement: 'em'});
+
+            $signupForm.formToWizard({
+                submitButton: 'SaveAccount',
+                nextBtnClass: 'btn btn-primary next',
+                prevBtnClass: 'btn btn-default prev',
+                buttonTag:    'button',
+                validateBeforeNext: function(form, step) {
+                    var stepIsValid = true;
+                    var validator = form.validate();
+                    $(':input', step).each( function(index) {
+                        var xy = validator.element(this);
+                        stepIsValid = stepIsValid && (typeof xy == 'undefined' || xy);
+                    });
+                    return stepIsValid;
+                },
+                progress: function (i, count) {
+                    $('#progress-complete').width(''+(i/count*100)+'%');
+                }
+            });
+        });
+</script>
+
+{% block page-scripts %}
+{% endblock %}
+</body>
+</html>
+
+

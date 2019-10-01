@@ -17,12 +17,13 @@
 					<th>Edit</th>
 					<th>Delete</th>
 				</tr>
-				<tr id="id1">
-					<td>1</td>
-					<td class="bbq">SIGNET 90</td>
-					<td class="delivery-date">09/20/2019</td>
+				{% for order in orders %}
+				<tr id="id{{forloop.counter}}">	
+					<td>{{forloop.counter}}</td>
+					<td class="bbq">{{order.bbq}}</td>
+					<td class="delivery-date">{{order.delivery_time}}</td>
 					<td>17:00</td>
-					<td class="main-address">Maria Anders</td>
+					<td class="main-address">{{order.addressid}}</td>
 					<td>
 						<button class="edit mybtn">
 							<i class="fa fa-edit" aria-hidden="true"></i>
@@ -34,23 +35,7 @@
 						</button>
 					</td>
 				</tr>
-				<tr id="id2">
-					<td>1</td>
-					<td class="bbq">IMPERIAL XLS</td>
-					<td class="delivery-date">09/20/2019</td>
-					<td>09:00</td>
-					<td class="main-address">Maria Anders 2</td>
-					<td>
-						<button class="edit mybtn">
-							<i class="fa fa-edit" aria-hidden="true"></i>
-						</button>
-					</td>
-					<td>
-						<button class="remove mybtn">
-							<i class="fa fa-remove" aria-hidden="true"></i>
-						</button>
-					</td>
-				</tr>
+				{% endfor %}
 			</table>
 		</div>
 

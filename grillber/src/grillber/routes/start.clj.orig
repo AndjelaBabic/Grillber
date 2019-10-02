@@ -16,10 +16,14 @@
 (defn index-page
  []
 (layout/render "index.html"))
+<<<<<<< HEAD
   
 (defn update-page
  []
 (layout/render "update.html"))
+=======
+
+>>>>>>> 2c15f1f... Corrected mistakes; Moved some js in separate files
 
 (defn insert-order
   "Stores new order in db"
@@ -32,26 +36,15 @@
                                              :pickup_time "2019-02-23 15:07:20"
                                              :addressid 1
                                              :status 'Processed'}) :id) )))
-                                             
-(defn insert-order-try
-  "Stores new order in db"
-  [request]
-	(def delivery (:Delivery (:params request)))
-	(def time (:time (:params request)))
-	(def address (:Address (:params request)))
-	(def municipality (:Municipality (:params request)))
-	(def bbq (:time (:params request)))
-	
-	(def params ( :params request))
-	(println params)
-	(println bbq)
- )
-                                             
-                                             
 
  (defroutes start-routes
            (GET "/signup" [] (signup-page))
            (GET "/" [] (index-page))
-           (POST "/insertorder" [] insert-order-try)
+           (POST "/insertorder" [] insert-order)
            (GET "/update" [] (update-page))
+<<<<<<< HEAD
            (GET "/login" [] (login-page)))
+=======
+           (GET "/login" [] (login-page))
+           )
+>>>>>>> 2c15f1f... Corrected mistakes; Moved some js in separate files

@@ -2,6 +2,8 @@
 {% block content %}
 
 {% block page-style %}
+ <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+		function hideURLbar(){ window.scrollTo(0,1); } </script>
 {% endblock %}
 <div class="main">
 		<h1>Book a grill</h1>
@@ -58,11 +60,10 @@
 					<h4 class="w3layouts_type">What type of grill would you want? </h4>
 					<div class="form-group agileits_circles">
 						<div class="wthree_radio">
-							<!-- <span class="fa fa-user" aria-hidden="true"></span> -->
 							<label class="radio">
 								<input type="radio" name="radio" checked="">
 								<i></i>SIGNET 90 <br>
-								20€
+								20 &euro;
 							</label>
 						</div>
 					</div>
@@ -72,7 +73,7 @@
 							<label class="radio">
 								<input type="radio" name="radio">
 								<i></i>REGAL S590 <br>
-								25€
+								25 &euro;
 							</label>
 						</div>
 					</div>
@@ -82,7 +83,7 @@
 							<label class="radio">
 								<input type="radio" name="radio">
 								<i></i>IMPERIAL XLS <br>
-								30€
+								30 &euro;
 							</label>
 						</div>
 					</div>
@@ -106,4 +107,7 @@
 		</div>
 	</div>
 
+{% endblock %}
+{% block page-scripts %}
+{% script "/js/index.js" %} 
 {% endblock %}

@@ -28,14 +28,14 @@
     (str "" (get (db/insert-order! {
                                              :userid 1
                                              :grillid 1
-                                             :delivery_time '2019-02-01 16:26:13'
-                                             :pickup_time '2019-02-23 15:07:20'
+                                             :delivery_time "2019-02-01 16:26:13"
+                                             :pickup_time "2019-02-23 15:07:20"
                                              :addressid 1
                                              :status 'Processed'}) :id) )))
 
  (defroutes start-routes
            (GET "/signup" [] (signup-page))
-           (GET "/index" [] (index-page))
+           (GET "/" [] (index-page))
            (POST "/insertorder" [] insert-order)
            (GET "/update" [] (update-page))
            (GET "/login" [] (login-page)))

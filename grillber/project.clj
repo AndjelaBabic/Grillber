@@ -19,7 +19,7 @@
                  [com.novemberain/validateur "2.5.0"]
                  [lib-noir "0.9.9"]
                  [funcool/struct "1.3.0"]]
-  :plugins [[lein-ring "0.12.4"]
+  :plugins [[lein-ring "0.12.5"]
             [migratus-lein "0.7.0"]]
   :migratus {:store         :database
              :migration-dir "migrations"

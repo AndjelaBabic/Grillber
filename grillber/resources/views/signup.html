@@ -9,18 +9,18 @@
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100">
-            <form class="login100-form validate-form" method="post" action="/signup">
+            <form class="login100-form validate-form" method="post" action="/signup" onsubmit="return validateForm()">
                 <span class="login100-form-title p-b-34">
 						Sign up!
 					</span>
 
                 <div class="wrap-input100 rs1-wrap-input100 validate-input m-b-20" data-validate="Type first name">
-                    <input id="firstname" class="input100" type="text" name="firstname" placeholder="First name">
+                    <input id="first_name" class="input100" type="text" name="first_name" placeholder="First name">
                     <span class="focus-input100"></span>
                 </div>
 
                 <div class="wrap-input100 rs2-wrap-input100 validate-input m-b-20" data-validate="Type last name">
-                    <input id="lastname" class="input100" type="text" name="lastname" placeholder="Last name">
+                    <input id="last_name" class="input100" type="text" name="last_name" placeholder="Last name">
                     <span class="focus-input100"></span>
                 </div>
 
@@ -72,4 +72,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block page-scripts %}
+{% script "/js/user.js" %} 
 {% endblock %}

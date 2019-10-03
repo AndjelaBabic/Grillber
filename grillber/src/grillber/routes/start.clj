@@ -13,6 +13,12 @@
   []
   (layout/render "signup.html"))
   
+(defn signup-page-submit [params]
+  
+  (db/insert-user! params)
+  (login-page)
+  )
+  
 (defn index-page
  []
 (layout/render "index.html"))
@@ -35,6 +41,7 @@
 
  (defroutes start-routes
            (GET "/signup" [] (signup-page))
+           (POST "/signup" [& form] (signup-page-submit form))
            (GET "/" [] (index-page))
            (POST "/insertorder" [] insert-order)
            (GET "/update" [] (update-page))

@@ -32,6 +32,14 @@
         (db/insert-user! (dissoc params :password2))
         (layout/render "/login.html"))
       (layout/render "signup.html" (assoc params :errors errors)))))
+      
+(defn login-on-submit [{:keys [params session]}]
+
+ (let [user (db/get-user-by-username-and-password params)]
+    (if(empty? user)
+   	 (layout/render "login.html" (assoc params :errors "The provided username and/or password are incorrect."))
+     (assoc (redirect "/") :session (assoc session :identity user))))
+ )
   
 (defn index-page
  []
@@ -59,4 +67,5 @@
            (GET "/" [] (index-page))
            (POST "/insertorder" [] insert-order)
            (GET "/update" [] (update-page))
-           (GET "/login" [] (login-page)))
+           (GET "/login" [] (login-page))
+           (POST "/login" request (login-on-submit request)))

@@ -16,7 +16,7 @@
 						Sign up!
 					</span> 
 				 {% if empty? errors %}             
-				<div class="alert alert-warning col-md-12" role="alert">
+				<div class="alert alert-warning alert-dismissible fade show col-md-12" role="alert">
                     {% if errors.email %}
                        {{errors.email|join}}<br>
                     {% endif %} 

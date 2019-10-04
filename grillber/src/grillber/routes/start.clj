@@ -1,10 +1,21 @@
 (ns grillber.routes.start
   (:require [compojure.core :refer :all]
             [grillber.layout :as layout]
-            [ring.util.response :as response]
+            [ring.util.response :refer [response redirect]]
             [struct.core :as st]
             [grillber.models.query_definition :as db]))
 
+(def user-schema-sign-up
+  [
+   [:password
+    st/string {:message  "Password must contain at least 6 characters"
+               :validate #(> (count %) 6)}]
+   [:email [st/email :message "Email not in a valid format"]]])  
+   
+(defn validate-user-sign-up? [user]
+  (first (st/validate user user-schema-sign-up)))
+  
+ 
 (defn login-page
   []
   (layout/render "login.html"))
@@ -13,11 +24,14 @@
   []
   (layout/render "signup.html"))
   
-(defn signup-page-submit [params]
-  
-  (db/insert-user! params)
-  (login-page)
-  )
+(defn sign-up-on-submit 
+ [params]
+  (let [errors (validate-user-sign-up? params)]
+   (if (empty? errors)
+      (do
+        (db/insert-user! (dissoc params :password2))
+        (layout/render "/login.html"))
+      (layout/render "signup.html" (assoc params :errors errors)))))
   
 (defn index-page
  []
@@ -41,7 +55,7 @@
 
  (defroutes start-routes
            (GET "/signup" [] (signup-page))
-           (POST "/signup" [& form] (signup-page-submit form))
+           (POST "/signup" [& form] (sign-up-on-submit form))
            (GET "/" [] (index-page))
            (POST "/insertorder" [] insert-order)
            (GET "/update" [] (update-page))

@@ -1,7 +1,7 @@
 -- name: insert-user!
 -- insert user in users
-INSERT INTO user (first_name, last_name, username, email, password)
-VALUES (:first_name, :last_name, :username, :email, :password);
+INSERT INTO user (first_name, last_name, email, username , password)
+VALUES (:first_name, :last_name, :email, :username, :password);
 
 -- name: get-user-by-username-and-password
 -- retrives a user with the given username

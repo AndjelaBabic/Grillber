@@ -18,6 +18,11 @@ WHERE id = :id;
 INSERT INTO orders (userid, grillid, delivery_time, pickup_time, addressid, status)
     VALUES (:userid, :grillid, :delivery_time, :pickup_time, :addressid, :status);
     
+-- name: insert-address!
+-- inserting address
+INSERT INTO address (street_name, part_of_the_city)
+    VALUES (:street_name, :part_of_the_city);
+    
 -- name: get-all-orders
 -- retrive orders
 SELECT *

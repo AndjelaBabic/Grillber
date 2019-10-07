@@ -34,7 +34,6 @@
       (layout/render "signup.html" (assoc params :errors errors)))))
       
 (defn login-on-submit [{:keys [params session]}]
-
  (let [user (db/get-user-by-username-and-password params)]
     (if(empty? user)
    	 (layout/render "login.html" (assoc params :errors "The provided username and/or password are incorrect."))
@@ -49,35 +48,52 @@
  []
 (layout/render "update.html"))
 
-(defn insert-order
 (defn logout [request]
   (-> (redirect "/login")
       (assoc :session {})))
 
 
+(defn insert-order!
   "Stores new order in db"
-  [request]
-  (
-    (str "" (get (db/insert-order! {
+  [params]
+     (db/insert-order! {
                                              :userid 1
                                              :grillid 1
                                              :delivery_time "2019-02-01 16:26:13"
                                              :pickup_time "2019-02-23 15:07:20"
                                              :addressid 1
-                                             :status 'Processed'}) :id) )))
-                                             
+                                             :status "Processed"}))
+(defn insert-address!
+  "Stores new address in db"
+  [params]
+     (db/insert-address! {
+                                             :street_name (:Address params)
+                                             :part_of_the_city (:Municipality params)
+                                             })
+)
+                                                                                          
 (defn insert-order-try
   "Stores new order in db"
   [request]
-	(def delivery (:Delivery (:params request)))
-	(def time (:time (:params request)))
-	(def address (:Address (:params request)))
-	(def municipality (:Municipality (:params request)))
-	(def bbq (:time (:params request)))
+  	(if (layout/is-authenticated? (:session request))
+  	(do
+  		(insert-address! (:params request))
+  		(insert-order! (:params request))
+  		(redirect "/")
+  	)
+  	(redirect "/login"))
+  	
+  	;(println (:session request))
+	;(def delivery (:Delivery (:params request)))
+	;(def time (:time (:params request)))
+	;(def address (:Address (:params request)))
+	;(def municipality (:Municipality (:params request)))
+	;(def bbq (:time (:params request)))
 	
-	(def params ( :params request))
-	(println params)
-	(println bbq)
+	;(def params (:params request))
+	;(println params)
+	;(println (new java.util.Date))
+	;(println bbq)
  )
                                              
                                              
@@ -89,5 +105,5 @@
            (POST "/insertorder" [] insert-order-try)
            (GET "/update" [] (update-page))
            (GET "/login" [] (login-page))
-           (POST "/login" request (login-on-submit request)))
+           (POST "/login" request (login-on-submit request))
            (GET "/logout" request (logout request)))

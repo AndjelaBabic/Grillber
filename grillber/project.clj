@@ -13,6 +13,7 @@
                  [selmer "1.12.5"]
                  [yesql "0.5.3"]
                  [ring-webjars "0.2.0"]
+                 [buddy/buddy-auth "2.1.0"]
                  [org.webjars/bootstrap "4.2.1"]
                  [org.webjars/font-awesome "5.6.1"]
                  [org.webjars/jquery "3.3.1-1"]

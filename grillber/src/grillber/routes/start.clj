@@ -50,6 +50,11 @@
 (layout/render "update.html"))
 
 (defn insert-order
+(defn logout [request]
+  (-> (redirect "/login")
+      (assoc :session {})))
+
+
   "Stores new order in db"
   [request]
   (
@@ -85,3 +90,4 @@
            (GET "/update" [] (update-page))
            (GET "/login" [] (login-page))
            (POST "/login" request (login-on-submit request)))
+           (GET "/logout" request (logout request)))

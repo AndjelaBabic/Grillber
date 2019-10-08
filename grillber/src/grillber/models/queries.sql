@@ -15,13 +15,20 @@ WHERE id = :id;
 
 -- name: insert-order!
 -- inserting order
-INSERT INTO orders (userid, grillid, delivery_time, pickup_time, addressid, status)
-    VALUES (:userid, :grillid, :delivery_time, :pickup_time, :addressid, :status);
+INSERT INTO orders (userid, grillid, delivery_time, addressid, status)
+VALUES (:userid, :grillid, :delivery_time, :addressid, :status);
     
 -- name: insert-address!
 -- inserting address
 INSERT INTO address (street_name, part_of_the_city)
-    VALUES (:street_name, :part_of_the_city);
+VALUES (:street_name, :part_of_the_city);
+
+-- name: last-insert-id
+-- get id from last inserted address
+SELECT max(id) as id
+FROM address;
+
+    
     
 -- name: get-all-orders
 -- retrive orders

@@ -95,6 +95,16 @@
 	;(println (new java.util.Date))
 	;(println bbq)
  )
+ 
+ (defn insert-order-try2
+  "Stores new order in db"
+  [request]
+  	(insert-address! (:params request))
+  	; address id (from last inserted
+  	(println (:id (nth (db/last-insert-id) 0)))
+  	; user id 
+  	(println (:id (nth (get-in request [:session :identity]) 0)))
+ )
                                              
                                              
 

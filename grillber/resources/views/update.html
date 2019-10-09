@@ -19,6 +19,7 @@
 				</tr>
 				{% for order in orders %}
 				<tr id="id{{ forloop.counter }}">
+					<td style="display:none;" class="orderid">{{order.id}}</td>
 					<td>{{forloop.counter}}</td>
 					<td class="bbq">{{order.bbq}}</td>
 					<td class="delivery-date-and-time">{{order.delivery_time}}</td>

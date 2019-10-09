@@ -95,6 +95,15 @@
   )
   (redirect "/login")))    
                                                                                               
+  
+  (defn delete-order 
+  [request]
+  	(if (layout/is-authenticated? (:session request))
+  	(do
+  	(db/delete-order-by-id! {:id (:id (:params request))})
+    (redirect "/")
+    )
+    (redirect "/login")))                                                                                    
 
  (defroutes start-routes
            (GET "/signup" [] (signup-page))
@@ -104,4 +113,5 @@
            (GET "/update" request [] (update-page request))
            (GET "/login" [] (login-page))
            (POST "/login" request (login-on-submit request))
-           (GET "/logout" request (logout request)))
+           (GET "/logout" request (logout request))
+           (POST "/delete" request [] (delete-order request)))

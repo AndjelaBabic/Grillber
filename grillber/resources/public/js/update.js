@@ -1,6 +1,22 @@
-$(".remove").on('click', function(event) {
-		//alert($(this).closest('tr')[0].sectionRowIndex);
+	$(".remove").on('click', function(event) {
+		var id = $(this).closest('tr').find('.orderid').text();
 		$(this).closest('tr').remove();
+        $.ajax({
+            type: "POST",
+            url: "/delete",
+            data: {
+                id: id
+            },
+            success: function (data) {
+                window.location = "/update";
+            },
+    /*        error: function (error) {
+                error.responseJSON.map(function (item) {
+                    console.log(item[0], item[1]);
+                    $("#error_" + item[0]).text(item[1]);
+                });
+            }*/
+        });
 	});
 
 	$(".edit").on('click', function(event) {

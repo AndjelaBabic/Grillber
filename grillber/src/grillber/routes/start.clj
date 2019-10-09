@@ -103,7 +103,14 @@
   	(db/delete-order-by-id! {:id (:id (:params request))})
     (redirect "/")
     )
-    (redirect "/login")))                                                                                    
+    (redirect "/login")))  
+    
+  (defn update-order 
+  [request]
+  (
+   (println "update")
+  (println request)
+  ) )                                                                                   
 
  (defroutes start-routes
            (GET "/signup" [] (signup-page))
@@ -111,6 +118,7 @@
            (GET "/" [] (index-page))
            (POST "/insertorder" [] save-order)
            (GET "/update" request [] (update-page request))
+           (POST "/updateorder" request [] (update-order request))
            (GET "/login" [] (login-page))
            (POST "/login" request (login-on-submit request))
            (GET "/logout" request (logout request))

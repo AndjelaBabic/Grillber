@@ -9,35 +9,46 @@
             },
             success: function (data) {
                 window.location = "/update";
-            },
-    /*        error: function (error) {
-                error.responseJSON.map(function (item) {
-                    console.log(item[0], item[1]);
-                    $("#error_" + item[0]).text(item[1]);
-                });
-            }*/
+            }
         });
 	});
 
 	$(".edit").on('click', function(event) {
-		var rowId = $(this).closest('tr')[0].sectionRowIndex;
+		var id = $(this).closest('tr').find('.orderid').text();
+		var addressId = $(this).closest('tr').find('.addressid').text();
 		var modal = document.getElementById("myModal");
 		var mainAddress = $(this).closest('tr').find('.main-address').text();
 		var bbq = $(this).closest('tr').find('.bbq').text();
 		var date = $(this).closest('tr').find('.delivery-date').text();
 		$('#Address').val(mainAddress);
-		$('#rowId').val(rowId);
-		$("#bbq-select").val(bbq);
-		$("#date-modal").val(date);
+		$('#rowId').val(id);
+		$('#addressId').val(addressId);
+		//$("#bbq-select").val(bbq);
+		//$("#date-modal").val(date);
 		modal.style.display = "block";
 
 	});
 
 	$("#SaveChanges").on('click', function(event) {
-		var address = $('#Address').val();
+		var street_name = $('#Address').val();
 		var bbq = $('#bbq-select').val();
 		var rowId = $('#rowId').val();
-		updateFields(address, bbq, rowId);
+		var addressId = $('#addressId').val(addressId);
+		alert(addressId); 
+		alert(bbq); 
+		alert(street_name);
+		$.ajax({
+            type: "POST",
+            url: "/updateorder",
+            data: {
+            	addressid: addressId,
+            	street_name: street_name,
+            	bbqid: bbq
+            },
+            success: function (data) {
+                window.location = "/update";
+            }
+        });
 	});
 
 	function updateFields(address, bbq, rowId) {

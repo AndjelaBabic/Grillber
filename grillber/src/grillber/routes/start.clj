@@ -55,14 +55,13 @@
 
 (defn insert-order!
   "Stores new order in db"
-  [params]
+  [request]
      (db/insert-order! {
-                                             :userid 1
+                                             :userid (:id (nth (get-in request [:session :identity]) 0))
                                              :grillid 1
-                                             :delivery_time "2019-02-01 16:26:13"
-                                             :pickup_time "2019-02-23 15:07:20"
-                                             :addressid 1
-                                             :status "Processed"}))
+                                             :delivery_time (clojure.string/join [(:Delivery (:params request)) " " (:time (:params request)) ":00"])
+                                             :addressid (:id (nth (db/last-insert-id) 0))
+                                             :status "Booked"}))
 (defn insert-address!
   "Stores new address in db"
   [params]
@@ -72,47 +71,23 @@
                                              })
 )
                                                                                           
-(defn insert-order-try
+(defn save-order
   "Stores new order in db"
   [request]
   	(if (layout/is-authenticated? (:session request))
   	(do
   		(insert-address! (:params request))
-  		(insert-order! (:params request))
-  		(redirect "/")
+  		(insert-order! request)
+  		(layout/render "index.html" (assoc (:params request) :message "Order successfully saved! Check it out in the order history!"))
   	)
   	(redirect "/login"))
-  	
-  	;(println (:session request))
-	;(def delivery (:Delivery (:params request)))
-	;(def time (:time (:params request)))
-	;(def address (:Address (:params request)))
-	;(def municipality (:Municipality (:params request)))
-	;(def bbq (:time (:params request)))
-	
-	;(def params (:params request))
-	;(println params)
-	;(println (new java.util.Date))
-	;(println bbq)
- )
- 
- (defn insert-order-try2
-  "Stores new order in db"
-  [request]
-  	(insert-address! (:params request))
-  	; address id (from last inserted
-  	(println (:id (nth (db/last-insert-id) 0)))
-  	; user id 
-  	(println (:id (nth (get-in request [:session :identity]) 0)))
- )
-                                             
-                                             
+ )                                                                                     
 
  (defroutes start-routes
            (GET "/signup" [] (signup-page))
            (POST "/signup" [& form] (sign-up-on-submit form))
            (GET "/" [] (index-page))
-           (POST "/insertorder" [] insert-order-try)
+           (POST "/insertorder" [] save-order)
            (GET "/update" [] (update-page))
            (GET "/login" [] (login-page))
            (POST "/login" request (login-on-submit request))

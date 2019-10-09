@@ -8,7 +8,6 @@
 <div class="main">
 		<h1>Book a grill</h1>
 		<div class="w3_agile_main_grids">
-		
 			<div id='progress'><div id='progress-complete'></div></div>
 			
 			<form id="SignupForm" action="/insertorder" class="agile_form" method="post">
@@ -104,8 +103,17 @@
 		
 		</div>
 	</div>
-
+	{% if message %}
+	<div id="myModal" class="modal" style="display:block">
+			<!-- Modal content -->
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				 {{message|join}}
+			</div>
+	</div>
+	{% endif %}
 {% endblock %}
 {% block page-scripts %}
 {% script "/js/index.js" %} 
+{% script "/js/update.js" %} 
 {% endblock %}

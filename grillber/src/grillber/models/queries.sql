@@ -28,8 +28,6 @@ VALUES (:street_name, :part_of_the_city);
 SELECT max(id) as id
 FROM address;
 
-    
-    
 -- name: get-all-orders
 -- retrive orders
 SELECT *
@@ -37,8 +35,8 @@ FROM orders;
 
 -- name: get-all-orders-by-user-id
 -- retrive orders for specific user
-SELECT *
-FROM orders
+SELECT orders.id as id, orders.delivery_time as delivery_time, orders.status as status, address.street_name as address, grill.name AS bbq
+FROM orders INNER JOIN address on orders.addressid = address.id INNER JOIN grill ON orders.grillid = grill.id
 WHERE userid = :userid;
 
 -- name: update-order!

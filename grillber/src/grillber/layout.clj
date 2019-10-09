@@ -1,5 +1,6 @@
 (ns grillber.layout
   (:require [selmer.parser :as parser]
+   			[buddy.auth :refer [authenticated?]]
             [ring.util.http-response :refer [content-type ok]]
             [ring.util.anti-forgery :refer [anti-forgery-field]]
             [ring.middleware.anti-forgery :refer [*anti-forgery-token*]]))
@@ -7,6 +8,9 @@
 (parser/set-resource-path! (clojure.java.io/resource "views"))
 (parser/add-tag! :csrf-field (fn [_ _] (anti-forgery-field)))
 (parser/cache-off!)
+
+(defn is-authenticated? [session]
+  (authenticated? session))
 
 (defn render
   [template & [params]]

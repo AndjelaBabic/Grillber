@@ -34,7 +34,6 @@
       (layout/render "signup.html" (assoc params :errors errors)))))
       
 (defn login-on-submit [{:keys [params session]}]
-
  (let [user (db/get-user-by-username-and-password params)]
     (if(empty? user)
    	 (layout/render "login.html" (assoc params :errors "The provided username and/or password are incorrect."))
@@ -49,23 +48,47 @@
  []
 (layout/render "update.html"))
 
-(defn insert-order
+(defn logout [request]
+  (-> (redirect "/login")
+      (assoc :session {})))
+
+
+(defn insert-order!
   "Stores new order in db"
   [request]
-  (
-    (str "" (get (db/insert-order! {
-                                             :userid 1
+     (db/insert-order! {
+                                             :userid (:id (nth (get-in request [:session :identity]) 0))
                                              :grillid 1
-                                             :delivery_time "2019-02-01 16:26:13"
-                                             :pickup_time "2019-02-23 15:07:20"
-                                             :addressid 1
-                                             :status 'Processed'}) :id) )))
+                                             :delivery_time (clojure.string/join [(:Delivery (:params request)) " " (:time (:params request)) ":00"])
+                                             :addressid (:id (nth (db/last-insert-id) 0))
+                                             :status "Booked"}))
+(defn insert-address!
+  "Stores new address in db"
+  [params]
+     (db/insert-address! {
+                                             :street_name (:Address params)
+                                             :part_of_the_city (:Municipality params)
+                                             })
+)
+                                                                                          
+(defn save-order
+  "Stores new order in db"
+  [request]
+  	(if (layout/is-authenticated? (:session request))
+  	(do
+  		(insert-address! (:params request))
+  		(insert-order! request)
+  		(layout/render "index.html" (assoc (:params request) :message "Order successfully saved! Check it out in the order history!"))
+  	)
+  	(redirect "/login"))
+ )                                                                                     
 
  (defroutes start-routes
            (GET "/signup" [] (signup-page))
            (POST "/signup" [& form] (sign-up-on-submit form))
            (GET "/" [] (index-page))
-           (POST "/insertorder" [] insert-order)
+           (POST "/insertorder" [] save-order)
            (GET "/update" [] (update-page))
            (GET "/login" [] (login-page))
-           (POST "/login" request (login-on-submit request)))
+           (POST "/login" request (login-on-submit request))
+           (GET "/logout" request (logout request)))

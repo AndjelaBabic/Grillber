@@ -105,7 +105,6 @@
     )
     (redirect "/login")))  
     
-   ; TODO fix redirect
   (defn update-order 
   [request]
   (do
@@ -116,7 +115,7 @@
    (db/update-order! {
    				:id (get-in request [:params :orderid])
    				:grillid (get-in request [:params :bbqid])})
-   (redirect "/")
+   (update-page request)
    )
    )                                                                                   
 

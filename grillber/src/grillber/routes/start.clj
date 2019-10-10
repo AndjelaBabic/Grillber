@@ -58,7 +58,7 @@
   [request]
      (db/insert-order! {
                                              :userid (:id (nth (get-in request [:session :identity]) 0))
-                                             :grillid 1
+                                             :grillid (get-in request [:params :radio])
                                              :delivery_time (clojure.string/join [(:Delivery (:params request)) " " (:time (:params request)) ":00"])
                                              :addressid (:id (nth (db/last-insert-id) 0))
                                              :status "Booked"}))
@@ -76,6 +76,7 @@
   [request]
   	(if (layout/is-authenticated? (:session request))
   	(do
+  		(println :params request)
   		(insert-address! (:params request))
   		(insert-order! request)
   		(layout/render "index.html" (assoc (:params request) :message "Order successfully saved! Check it out in the order history!"))

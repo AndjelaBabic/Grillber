@@ -41,11 +41,9 @@
             	street_name: street_name,
             	bbqid: bbq
             }
-           /* success: function (data) {
-                window.location = "/";
-            }*/
         });
 	});
+
 
 	function updateFields(address, bbq, rowId) {
 		//alert($('#id1').find("td").eq(1).text());

@@ -12,17 +12,20 @@
 					<th>Number</th>
 					<th>BBQ</th>
 					<th>Delivery date</th>
-					<th>Delivery time</th>
 					<th>Address</th>
+					<th>Status</th>
 					<th>Edit</th>
 					<th>Delete</th>
 				</tr>
-				<tr id="id1">
-					<td>1</td>
-					<td class="bbq">SIGNET 90</td>
-					<td class="delivery-date">09/20/2019</td>
-					<td>17:00</td>
-					<td class="main-address">Maria Anders</td>
+				{% for order in orders %}
+				<tr id="id{{ forloop.counter }}">
+					<td style="display:none;" class="orderid">{{order.id}}</td>
+					<td style="display:none;" class="addressid">{{order.addressid}}</td>
+					<td>{{forloop.counter}}</td>
+					<td class="bbq">{{order.bbq}}</td>
+					<td class="delivery-date-and-time">{{order.delivery_time}}</td>
+					<td class="main-address">{{order.address}}</td>
+					<td>{{order.status}}</td>
 					<td>
 						<button class="edit mybtn">
 							<i class="fa fa-edit" aria-hidden="true"></i>
@@ -34,23 +37,7 @@
 						</button>
 					</td>
 				</tr>
-				<tr id="id2">
-					<td>1</td>
-					<td class="bbq">IMPERIAL XLS</td>
-					<td class="delivery-date">09/20/2019</td>
-					<td>09:00</td>
-					<td class="main-address">Maria Anders 2</td>
-					<td>
-						<button class="edit mybtn">
-							<i class="fa fa-edit" aria-hidden="true"></i>
-						</button>
-					</td>
-					<td>
-						<button class="remove mybtn">
-							<i class="fa fa-remove" aria-hidden="true"></i>
-						</button>
-					</td>
-				</tr>
+				{% endfor %}
 			</table>
 		</div>
 
@@ -59,7 +46,7 @@
 			<!-- Modal content -->
 			<div class="modal-content">
 				<span class="close">&times;</span>
-				<form action="#" class="agile_form" method="post">
+				<form class="agile_form">
 					<h3>Edit</h3>
 					<fieldset>
 
@@ -69,21 +56,10 @@
 							<div class="wthree_input">
 								<i class="fa fa-globe" aria-hidden="true"></i> 
 								<select id="bbq-select" class="form-control">
-									<option value="BBQ" selected="">BBQ</option>
-									<option value="SIGNET 90">SIGNET 90</option>
-									<option value="REGAL S590">REGAL S590</option>
-									<option value="IMPERIAL XLS">IMPERIAL XLS</option>
+									<option value="1" selected="">SIGNET 90</option>
+									<option value="2">REGAL S590</option>
+									<option value="3">IMPERIAL XLS</option>
 								</select>
-							</div>
-						</div>
-
-						<div class="form-group agileits_w3layouts_form "
-							style="padding-top: 20px">Delivery date:</div>
-						<div class="form-group agileits_w3layouts_form">
-							<div class="wthree_input">
-								<i class="fa fa-calendar" aria-hidden="true"></i> <input
-									id="date-modal" type="date" name="Delivery"
-									class="form-control dateclass" placeholder="Pick a date" />
 							</div>
 						</div>
 
@@ -95,7 +71,7 @@
 									id="Address" type="text" name="Address" class="form-control" />
 							</div>
 						</div>
-
+						<input id="addressId" type="hidden" />
 						<input id="rowId" type="hidden" />
 						<div>
 							<h3>

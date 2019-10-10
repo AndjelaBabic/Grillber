@@ -1,27 +1,50 @@
-$(".remove").on('click', function(event) {
-		//alert($(this).closest('tr')[0].sectionRowIndex);
+	$(".remove").on('click', function(event) {
+		var id = $(this).closest('tr').find('.orderid').text();
 		$(this).closest('tr').remove();
+        $.ajax({
+            type: "POST",
+            url: "/delete",
+            data: {
+                id: id
+            },
+            success: function (data) {
+                window.location = "/update";
+            }
+        });
 	});
 
 	$(".edit").on('click', function(event) {
-		var rowId = $(this).closest('tr')[0].sectionRowIndex;
+		var id = $(this).closest('tr').find('.orderid').text();
+		var addressId = $(this).closest('tr').find('.addressid').text();
 		var modal = document.getElementById("myModal");
 		var mainAddress = $(this).closest('tr').find('.main-address').text();
 		var bbq = $(this).closest('tr').find('.bbq').text();
-		var date = $(this).closest('tr').find('.delivery-date').text();
 		$('#Address').val(mainAddress);
-		$('#rowId').val(rowId);
-		$("#bbq-select").val(bbq);
-		$("#date-modal").val(date);
+		$('#rowId').val(id);
+		$('#addressId').val(addressId);
 		modal.style.display = "block";
 
 	});
 
 	$("#SaveChanges").on('click', function(event) {
-		var address = $('#Address').val();
+		var street_name = $('#Address').val();
 		var bbq = $('#bbq-select').val();
-		var rowId = $('#rowId').val();
-		updateFields(address, bbq, rowId);
+		var orderID = $('#rowId').val();
+		var addressID = $('#addressId').val();
+		 
+		$.ajax({
+            type: "POST",
+            url: "/updateorder",
+            data: {
+            	orderid: orderID,
+            	addressid: addressID,
+            	street_name: street_name,
+            	bbqid: bbq
+            }
+           /* success: function (data) {
+                window.location = "/";
+            }*/
+        });
 	});
 
 	function updateFields(address, bbq, rowId) {

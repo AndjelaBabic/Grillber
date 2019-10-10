@@ -12,6 +12,7 @@
                :validate #(> (count %) 6)}]
    [:email [st/email :message "Email not in a valid format"]]])  
    
+   
 (defn validate-user-sign-up? [user]
   (first (st/validate user user-schema-sign-up)))
   
@@ -52,7 +53,6 @@
   (-> (redirect "/login")
       (assoc :session {})))
 
-
 (defn insert-order!
   "Stores new order in db"
   [request]
@@ -81,14 +81,52 @@
   		(layout/render "index.html" (assoc (:params request) :message "Order successfully saved! Check it out in the order history!"))
   	)
   	(redirect "/login"))
- )                                                                                     
+ )
+ 
+ (defn update-page
+ [request]
+  (if (layout/is-authenticated? (:session request))
+  (do
+  (def userid (:id (nth (get-in request [:session :identity]) 0)))
+  (def orders (db/get-all-orders-by-user-id {:userid userid}))
+  (println orders)
+  (layout/render "update.html"
+ 				{:orders orders})
+  )
+  (redirect "/login")))    
+                                                                                              
+  
+  (defn delete-order 
+  [request]
+  	(if (layout/is-authenticated? (:session request))
+  	(do
+  	(db/delete-order-by-id! {:id (:id (:params request))})
+    (redirect "/")
+    )
+    (redirect "/login")))  
+    
+  (defn update-order 
+  [request]
+  (do
+   (db/update-address! {
+   				:id (get-in request [:params :addressid])
+   				:street_name (get-in request [:params :street_name])
+   				})
+   (db/update-order! {
+   				:id (get-in request [:params :orderid])
+   				:grillid (get-in request [:params :bbqid])})
+   (update-page request)
+   )
+   )                                                                                   
 
  (defroutes start-routes
            (GET "/signup" [] (signup-page))
            (POST "/signup" [& form] (sign-up-on-submit form))
            (GET "/" [] (index-page))
            (POST "/insertorder" [] save-order)
-           (GET "/update" [] (update-page))
+           (GET "/update" request [] (update-page request))
+           (POST "/updateorder" request [] (update-order request))
            (GET "/login" [] (login-page))
            (POST "/login" request (login-on-submit request))
-           (GET "/logout" request (logout request)))
+           (GET "/logout" request (logout request))
+           (POST "/delete" request [] (delete-order request)))

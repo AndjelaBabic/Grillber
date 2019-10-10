@@ -47,7 +47,7 @@ WHERE id = :id;
 
 -- name: update-address!
 -- updates address
-UPDATE orders
+UPDATE address
 SET street_name = :street_name
 WHERE id = :id;
 

@@ -105,12 +105,20 @@
     )
     (redirect "/login")))  
     
+   ; TODO fix redirect
   (defn update-order 
   [request]
-  (
-   (println "update")
-  (println request)
-  ) )                                                                                   
+  (do
+   (db/update-address! {
+   				:id (get-in request [:params :addressid])
+   				:street_name (get-in request [:params :street_name])
+   				})
+   (db/update-order! {
+   				:id (get-in request [:params :orderid])
+   				:grillid (get-in request [:params :bbqid])})
+   (redirect "/")
+   )
+   )                                                                                   
 
  (defroutes start-routes
            (GET "/signup" [] (signup-page))

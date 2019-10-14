@@ -6,10 +6,12 @@
             [grillber.models.query_definition :as db]))
   
 (defn index-page
+"Renders main page for booking"
  []
 (layout/render "index.html"))
   
 (defn update-page
+ "Renders order history page"
  []
 (layout/render "update.html"))
 
@@ -45,19 +47,20 @@
  )
  
  (defn update-page
+  "Displays a page with all orders made by logged-in user"
  [request]
   (if (layout/is-authenticated? (:session request))
   (do
   (def userid (:id (nth (get-in request [:session :identity]) 0)))
   (def orders (db/get-all-orders-by-user-id {:userid userid}))
-  (println orders)
   (layout/render "update.html"
  				{:orders orders})
   )
   (redirect "/login")))    
                                                                                               
   
-  (defn delete-order 
+  (defn delete-order
+  "Deletes an order from database by id"
   [request]
   	(if (layout/is-authenticated? (:session request))
   	(do
@@ -66,7 +69,8 @@
     )
     (redirect "/login")))  
     
-  (defn update-order 
+  (defn update-order
+  "Updates an order in the database by with new address and/or different bbq"
   [request]
   (do
    (db/update-address! {

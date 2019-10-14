@@ -18,14 +18,17 @@
   
  
 (defn login-page
+"Renders login page"
   []
   (layout/render "login.html"))
 
 (defn signup-page
+"Renders sign up page"
   []
   (layout/render "signup.html"))
   
 (defn sign-up-on-submit 
+"Stores new user in the database"
  [params]
   (let [errors (validate-user-sign-up? params)]
    (if (empty? errors)
@@ -34,14 +37,18 @@
         (layout/render "/login.html"))
       (layout/render "signup.html" (assoc params :errors errors)))))
       
-(defn login-on-submit [{:keys [params session]}]
+(defn login-on-submit 
+"Handles request for login of the user"
+[{:keys [params session]}]
  (let [user (db/get-user-by-username-and-password params)]
     (if(empty? user)
    	 (layout/render "login.html" (assoc params :errors "The provided username and/or password are incorrect."))
      (assoc (redirect "/") :session (assoc session :identity user))))
  )
 
-(defn logout [request]
+(defn logout 
+"Handles request for logout/ redirects on login page"
+[request]
   (-> (redirect "/login")
       (assoc :session {})))
                                                                      

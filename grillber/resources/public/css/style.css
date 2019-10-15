@@ -322,7 +322,7 @@ label.radio {
 	.agileits_w3layouts_form {
 		width: 47.65%;
 	}
-	.wthree_input input[type="text"], .w3ls_description textarea, .wthree_input select, .wthree_input input[type="email"], .wthree_input input[type="password"], .wthree_input input[type="date"], , .wthree_input input[type="time"] {
+	.wthree_input input[type="text"], .w3ls_description textarea, .wthree_input select, .wthree_input input[type="email"], .wthree_input input[type="password"], .wthree_input input[type="date"] , .wthree_input input[type="time"] {
 		width: 83%;
 	}
 	#progress,#progress-complete {
@@ -405,7 +405,7 @@ label.radio {
 		font-size: 1.3em;
 		margin-bottom: 1em;
 	}
-	.wthree_input input[type="text"], .w3ls_description textarea, .wthree_input select, .wthree_input input[type="email"], .wthree_input input[type="password"], .wthree_input input[type="date"], , .wthree_input input[type="time"] {
+	.wthree_input input[type="text"], .w3ls_description textarea, .wthree_input select, .wthree_input input[type="email"], .wthree_input input[type="password"], .wthree_input input[type="date"] , .wthree_input input[type="time"] {
 		width: 78.5%;
 	}
 	.agileits_copyright p {
